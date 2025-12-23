@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Sequence
 
 from aiogram import Bot
 from sqlalchemy.ext.asyncio import AsyncSession

@@ -9,7 +9,7 @@ from src.app.db.repos.player_repo import PlayerRepo
 @dataclass(frozen=True)
 class JoinPrecheckResult:
     ok: bool
-    reason: str  # "not_found" | "already_joined" | "closed" | "ok"
+    reason: str
     game: Game | None = None
 
 

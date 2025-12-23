@@ -1,11 +1,9 @@
 from dataclasses import dataclass
-from typing import List
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.app.db.models import Game
 from src.app.db.repos.game_repo import GameRepo
-from src.app.db.repos.player_repo import PlayerRepo
 from src.app.utils.code import generate_game_code
 from src.app.utils.link import generate_link
 

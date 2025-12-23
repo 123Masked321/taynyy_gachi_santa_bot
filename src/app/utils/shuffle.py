@@ -1,5 +1,5 @@
 import random
-from typing import List, Dict
+from typing import List
 
 
 def shuffle_list(players:  List[int]) -> List[tuple[int, int]]:

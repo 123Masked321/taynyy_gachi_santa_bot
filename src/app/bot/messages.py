@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Iterable
-
 from src.app.db.models import Game, Player
 from src.app.services.game_service import GameInfoDTO
 

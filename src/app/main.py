@@ -1,16 +1,42 @@
-# This is a sample Python script.
+import asyncio
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from aiogram import Bot, Dispatcher
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
+
+from src.app.bot.DBMiddleware import DbSessionMiddleware
+from src.app.settings import settings
+
+from aiogram.types import BotCommand, BotCommandScopeDefault
+
+from src.app.bot.handlers.game import game_router
+from src.app.bot.handlers.start import start_router
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+async def set_commands(bot: Bot):
+    commands = [
+        BotCommand(command="create", description="Создать игру"),
+        BotCommand(command="join", description="Вступить в игру"),
+        BotCommand(command="groups", description="Посмотреть информацию про все группы"),
+        BotCommand(command="start", description="Стартовое сообщение"),
+    ]
+    await bot.set_my_commands(commands, BotCommandScopeDefault())
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+async def main():
+    bot = Bot(token=settings.TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML),)
+    dp = Dispatcher()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    dp.include_router(game_router)
+    dp.include_router(start_router)
+
+    dp.update.middleware(DbSessionMiddleware())
+
+    await set_commands(bot)
+
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

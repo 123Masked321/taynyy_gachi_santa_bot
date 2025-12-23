@@ -11,6 +11,7 @@ class Game(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(nullable=False)
+    money: Mapped[str] = mapped_column(nullable=False)
     code: Mapped[str] = mapped_column(unique=True, nullable=False, index=True)
     status: Mapped[str] = mapped_column(nullable=False)
     owner_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
@@ -31,8 +32,9 @@ class Player(Base):
     game_id: Mapped[int] = mapped_column(ForeignKey("games.id", ondelete="CASCADE"), nullable=False)
     tg_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
     name: Mapped[str] = mapped_column(nullable=False)
+    username: Mapped[str] = mapped_column(nullable=False)
 
-    game = relationship("Game", back_populates="players")
+    game: Mapped["Game"] = relationship("Game", back_populates="players")
 
 
 class Assignment(Base):

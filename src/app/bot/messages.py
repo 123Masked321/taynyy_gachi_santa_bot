@@ -6,13 +6,6 @@ from src.app.db.models import Game, Player
 from src.app.services.game_service import GameInfoDTO
 
 
-def user_display_name(user) -> str:
-    # aiogram.types.User
-    if user.full_name:
-        return user.full_name
-    return str(user.id)
-
-
 def welcome_text() -> str:
     return (
         "<b>Тайный Гачи Санта</b>\n\n"
@@ -38,6 +31,7 @@ def game_info_text(dto: GameInfoDTO) -> str:
         f"Код: <code>{dto.code}</code>\n"
         f"Статус: {status_line} ({dto.status})\n"
         f"Гачистов: <b>{dto.participants}</b>\n"
+        f"Цена подарков: <b>{dto.money}</b>\n"
         f"Lube: {dto.deep_link}"
     )
 
@@ -51,11 +45,3 @@ def participants_text(players: list[Player]) -> str:
         uname = f"@{p.username}" if p.username else ""
         lines.append(f"{i}. {p.name} {uname}".strip())
     return "\n".join(lines)
-
-
-def draw_result_admin_text(g: Game, delivered: int, failed: int) -> str:
-    return (
-        f"🎲 Жеребьёвка проведена для <code>{g.code}</code>.\n"
-        f"Сообщения в личку: ✅ {delivered}, ❌ {failed}\n\n"
-        f"Участники могут проверить /my <code>{g.code}</code>."
-    )

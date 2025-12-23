@@ -46,6 +46,8 @@ class AssignmentService:
         await assign_repo.save_assignments(game_id, pairs, replace=True)
         await game_repo.set_game_status(game_id, "drawn")
 
+        money = game_repo.get_money_by_id(game_id)
+
         by_id = {p.id: p for p in players}
 
         delivered = 0
@@ -56,7 +58,8 @@ class AssignmentService:
             try:
                 await bot.send_message(
                     giver.tg_id,
-                    f"Твой получатель: <b>{receiver.name}</b>",
+                    f"Твой получатель: <b>{receiver.name}</b>"
+                    f"Приблизительная цена подарка: {money}",
                     parse_mode="HTML",
                 )
                 delivered += 1

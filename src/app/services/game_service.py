@@ -17,6 +17,7 @@ class GameInfoDTO:
     code: str
     status: str
     participants: int
+    money: str
     deep_link: str
 
 
@@ -54,8 +55,13 @@ class GameService:
             code=game.code,
             status=game.status,
             participants=cnt,
+            money=game.money,
             deep_link=link,
         )
+
+    async def money_game(self, game_id: int) -> str:
+        repo = GameRepo(self.session)
+        return await repo.get_money_by_id(game_id)
 
     async def lock_game(self, game_id: int) -> bool:
         repo = GameRepo(self.session)

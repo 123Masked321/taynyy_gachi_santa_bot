@@ -58,7 +58,7 @@ async def precheck_and_ask_name(
 
     if chk.reason == "already_joined":
         await state.clear()
-        await message.answer(f"Ты уже в игре «{chk.game.name}» ✅")
+        await message.answer(f"Ты уже в игре «{chk.game.name}»\n Информация про группы: /groups")
         return
 
     await ask_name_for_join(message, state, code)
@@ -100,4 +100,4 @@ async def finish_join(message: Message, state: FSMContext, session: AsyncSession
         username=username
     )
 
-    await message.answer(f"Ты участвуешь) Жди теперь")
+    await message.answer(f"Ты участвуешь) Жди теперь\n Информация про группы: /groups")

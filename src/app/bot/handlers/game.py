@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.app.bot.keyboards import role_keyboard, games_list_keyboard, game_keyboard
 from src.app.bot.messages import game_created_text, game_info_text, participants_text
 from src.app.db.models import Game
-from src.app.services.assignment_repo import AssignmentService
+from src.app.services.assignment_service import AssignmentService
 from src.app.services.game_service import GameService
 from src.app.services.player_service import PlayerService
 from src.app.utils.link import generate_link
@@ -138,7 +138,7 @@ async def leave_cb(callback: CallbackQuery, session: AsyncSession) -> None:
     ok = await player_serv.leave_game(game_id, callback.from_user.id)
 
     if not ok:
-        await callback.answer("Не получилось выйти (возможно ты админ или игры нет)", show_alert=True)
+        await callback.answer("Не получилось выйти", show_alert=True)
         return
 
     await callback.message.answer("Ты вышел из группы ✅")

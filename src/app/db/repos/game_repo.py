@@ -36,6 +36,10 @@ class GameRepo:
         res = await self.session.execute(select(Game).where(Game.id == game_id))
         return res.scalar_one_or_none()
 
+    async def get_money_by_id(self, game_id: int) -> str | None:
+        res = await self.session.execute(select(Game.money).where(Game.id == game_id))
+        return res.scalar_one_or_none()
+
     async def set_game_status(self, game_id: int, status: str) -> None:
         await self.session.execute(
             update(Game).where(Game.id == game_id).values(status=status)
